@@ -5,7 +5,7 @@ import Server from './classes/server';
 
 const server = new Server();
 
-const uri: string = 'mongodb://localhost:27017/fotosdb';
+const uri: string = 'mongodb://localhost:27017/citycare';
 
 
 // Body parser

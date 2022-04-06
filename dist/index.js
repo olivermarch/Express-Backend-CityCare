@@ -8,7 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const server_1 = __importDefault(require("./classes/server"));
 const server = new server_1.default();
-const uri = 'mongodb://localhost:27017/fotosdb';
+const uri = 'mongodb://localhost:27017/citycare';
 // Body parser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
