@@ -1,7 +1,9 @@
-import userRoutes from './routes/usuario';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import Server from './classes/server';
+
+import incidenciaRoutes from './routes/incidencia';
+import userRoutes from './routes/usuario';
 
 const server = new Server();
 
@@ -12,8 +14,9 @@ const uri: string = 'mongodb://localhost:27017/citycare';
 server.app.use( bodyParser.urlencoded({ extended: true }));
 server.app.use( bodyParser.json() );
 
-// Rutas de mi app
+// Rutas
 server.app.use('/user', userRoutes );
+server.app.use('/incidencia', incidenciaRoutes);
 
 
 // Conectar DB
