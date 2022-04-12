@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+
+import fileUpload from 'express-fileupload';
 import Server from './classes/server';
 
 import incidenciaRoutes from './routes/incidencia';
@@ -13,6 +15,9 @@ const uri: string = 'mongodb://localhost:27017/citycare';
 // Body parser
 server.app.use( bodyParser.urlencoded({ extended: true }));
 server.app.use( bodyParser.json() );
+
+// Subidas de archivos
+server.app.use(fileUpload({useTempFiles: true}) );
 
 // Rutas
 server.app.use('/user', userRoutes );

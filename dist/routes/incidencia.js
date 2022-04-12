@@ -44,4 +44,44 @@ incidenciaRoutes.post('/', [authentication_1.verifyToken], (request, response) =
         response.json(err);
     });
 });
+incidenciaRoutes.post('/upload', [authentication_1.verifyToken], (request, response) => {
+    if (!request.files) {
+        return response.status(400).json({
+            ok: false,
+            mensaje: 'No file was uploaded'
+        });
+    }
+    //const file: FileUpload = request.file.image;
+    const file = (request.files.image);
+    if (!file) {
+        return response.status(400).json({
+            ok: false,
+            mensaje: 'Not image was uploaded'
+        });
+    }
+    if (!file.mimetype.includes('image')) {
+        return response.status(400).json({
+            ok: false,
+            mensaje: 'This is not an image'
+        });
+    }
+    response.json({
+        ok: true,
+        file: file.mimetype
+    });
+});
+//Servicio para subir archivos
+// incidenciaRoutes.post( '/upload', [ verifyToken ], async (req: any, res: Response) => {
+//     if ( !req.files ) {
+//         return res.status(400).json({
+//             ok: false,
+//             mensaje: 'No se subió ningun archivo'
+//         });
+//     }
+//     //const file = req.file.image;
+//     res.json({
+//         ok: true,
+//         //file
+//     });
+// });
 exports.default = incidenciaRoutes;

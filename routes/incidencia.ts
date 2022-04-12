@@ -2,6 +2,8 @@ import { Router, Response } from 'express';
 import { verifyToken } from '../middlewares/authentication';
 import bodyParser from 'body-parser';
 import { Incidencia } from '../models/incidencias.model';
+import { FileUpload } from '../interfaces/file-upload';
+
 
 
 
@@ -53,6 +55,60 @@ incidenciaRoutes.post('/', [verifyToken], (request: any, response: Response) => 
     });
 
 });
+
+incidenciaRoutes.post('/upload', [ verifyToken], (request: any, response: Response) =>{
+
+    if (!request.files) {
+            return response.status(400).json({
+                ok:false,
+                mensaje: 'No file was uploaded'
+            });
+    }
+
+    //const file: FileUpload = request.file.image;
+    const file: FileUpload  = (request.files.image) as FileUpload;
+
+    if (!file) {
+        return response.status(400).json({
+            ok:false,
+            mensaje: 'Not image was uploaded'
+        });
+    }
+
+    if ( !file.mimetype.includes('image')) {
+        return response.status(400).json({
+            ok:false,
+            mensaje: 'This is not an image'
+        });
+    }
+
+    response.json({
+        ok: true,
+        file: file.mimetype
+    });
+
+});
+
+
+//Servicio para subir archivos
+// incidenciaRoutes.post( '/upload', [ verifyToken ], async (req: any, res: Response) => {
+    
+//     if ( !req.files ) {
+//         return res.status(400).json({
+//             ok: false,
+//             mensaje: 'No se subió ningun archivo'
+//         });
+//     }
+
+
+//     //const file = req.file.image;
+
+//     res.json({
+//         ok: true,
+//         //file
+//     });
+
+// });
 
 
 export  default incidenciaRoutes;
