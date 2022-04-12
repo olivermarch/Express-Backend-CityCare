@@ -8,11 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const authentication_1 = require("../middlewares/authentication");
 const incidencias_model_1 = require("../models/incidencias.model");
+const fileSystem_1 = __importDefault(require("../classes/fileSystem"));
 const incidenciaRoutes = (0, express_1.Router)();
+const fileSystem = new fileSystem_1.default();
 // Para obtener las incidencias paginadas
 incidenciaRoutes.get('/', (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     let page = Number(request.query.page) || 1;
@@ -65,23 +70,11 @@ incidenciaRoutes.post('/upload', [authentication_1.verifyToken], (request, respo
             mensaje: 'This is not an image'
         });
     }
+    //llamando al mmetodo para crear el directorio con el usuario y la imagen
+    fileSystem.saveImgTemp(file, request.usuario._id);
     response.json({
         ok: true,
         file: file.mimetype
     });
 });
-//Servicio para subir archivos
-// incidenciaRoutes.post( '/upload', [ verifyToken ], async (req: any, res: Response) => {
-//     if ( !req.files ) {
-//         return res.status(400).json({
-//             ok: false,
-//             mensaje: 'No se subió ningun archivo'
-//         });
-//     }
-//     //const file = req.file.image;
-//     res.json({
-//         ok: true,
-//         //file
-//     });
-// });
 exports.default = incidenciaRoutes;

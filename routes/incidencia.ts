@@ -3,12 +3,14 @@ import { verifyToken } from '../middlewares/authentication';
 import bodyParser from 'body-parser';
 import { Incidencia } from '../models/incidencias.model';
 import { FileUpload } from '../interfaces/file-upload';
+import FileSystem from '../classes/fileSystem';
 
 
 
 
 
 const incidenciaRoutes = Router();
+const fileSystem = new FileSystem();
 
 // Para obtener las incidencias paginadas
 incidenciaRoutes.get('/', async (request: any, response: Response) => {
@@ -82,33 +84,15 @@ incidenciaRoutes.post('/upload', [ verifyToken], (request: any, response: Respon
         });
     }
 
+    //llamando al mmetodo para crear el directorio con el usuario y la imagen
+    fileSystem.saveImgTemp(file, request.usuario._id);
+
     response.json({
         ok: true,
         file: file.mimetype
     });
 
 });
-
-
-//Servicio para subir archivos
-// incidenciaRoutes.post( '/upload', [ verifyToken ], async (req: any, res: Response) => {
-    
-//     if ( !req.files ) {
-//         return res.status(400).json({
-//             ok: false,
-//             mensaje: 'No se subió ningun archivo'
-//         });
-//     }
-
-
-//     //const file = req.file.image;
-
-//     res.json({
-//         ok: true,
-//         //file
-//     });
-
-// });
 
 
 export  default incidenciaRoutes;
