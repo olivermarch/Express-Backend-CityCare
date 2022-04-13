@@ -1,9 +1,11 @@
-import { Router, Response } from 'express';
+import { Router, Response, request } from 'express';
 import { verifyToken } from '../middlewares/authentication';
 import bodyParser from 'body-parser';
 import { Incidencia } from '../models/incidencias.model';
 import { FileUpload } from '../interfaces/file-upload';
 import FileSystem from '../classes/fileSystem';
+import userRoutes from './usuario';
+import { Usuario } from '../models/usuario.model';
 
 
 
@@ -94,6 +96,28 @@ incidenciaRoutes.post('/upload', [ verifyToken],async (request: any, response: R
     });
 
 });
+
+incidenciaRoutes.get('/image/:userid/:image', (request:any, response: Response) => {
+
+    const userID = request.params.userid;
+    const image = request.params.image;
+
+    const pathPhoto = fileSystem.getPhotoUrl( userID, image)
+
+
+    response.sendFile(pathPhoto);
+
+});
+
+
+userRoutes.get('/', [verifyToken], (request: any, response: Response) => {
+    const usuario = request.usuario;
+
+    response.json({
+        ok: true,
+        usuario
+    })
+})
 
 
 export  default incidenciaRoutes;

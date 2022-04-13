@@ -5,6 +5,20 @@ import uniqid from 'uniqid';
 
 export default class FileSystem {
 
+
+    getPhotoUrl(userID: string, image: string) {
+        
+        const pathPhoto = path.resolve(__dirname, '../uploads', userID, 'incidencias', image);
+
+        // the case the image does not exist
+        const exist = fs.existsSync(pathPhoto);
+        if(!exist){
+            return path.resolve(__dirname, '../assets/noexist.jpg');
+        }
+
+        return pathPhoto;
+    }
+
     constructor(){};
 
     saveTempImg(file: FileUpload, userID: string){

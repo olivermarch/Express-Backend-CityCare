@@ -16,6 +16,7 @@ const express_1 = require("express");
 const authentication_1 = require("../middlewares/authentication");
 const incidencias_model_1 = require("../models/incidencias.model");
 const fileSystem_1 = __importDefault(require("../classes/fileSystem"));
+const usuario_1 = __importDefault(require("./usuario"));
 const incidenciaRoutes = (0, express_1.Router)();
 const fileSystem = new fileSystem_1.default();
 // Para obtener las incidencias paginadas
@@ -79,4 +80,17 @@ incidenciaRoutes.post('/upload', [authentication_1.verifyToken], (request, respo
         file: file.mimetype
     });
 }));
+incidenciaRoutes.get('/image/:userid/:image', (request, response) => {
+    const userID = request.params.userid;
+    const image = request.params.image;
+    const pathPhoto = fileSystem.getPhotoUrl(userID, image);
+    response.sendFile(pathPhoto);
+});
+usuario_1.default.get('/', [authentication_1.verifyToken], (request, response) => {
+    const usuario = request.usuario;
+    response.json({
+        ok: true,
+        usuario
+    });
+});
 exports.default = incidenciaRoutes;

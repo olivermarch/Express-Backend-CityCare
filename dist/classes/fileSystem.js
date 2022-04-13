@@ -7,6 +7,15 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const uniqid_1 = __importDefault(require("uniqid"));
 class FileSystem {
+    getPhotoUrl(userID, image) {
+        const pathPhoto = path_1.default.resolve(__dirname, '../uploads', userID, 'incidencias', image);
+        // the case the image does not exist
+        const exist = fs_1.default.existsSync(pathPhoto);
+        if (!exist) {
+            return path_1.default.resolve(__dirname, '../assets/noexist.jpg');
+        }
+        return pathPhoto;
+    }
     constructor() { }
     ;
     saveTempImg(file, userID) {
