@@ -39,6 +39,8 @@ incidenciaRoutes.get('/', (request, response) => __awaiter(void 0, void 0, void 
 incidenciaRoutes.post('/', [authentication_1.verifyToken], (request, response) => {
     const body = request.body;
     body.usuario = request.usuario._id;
+    const images = fileSystem.moveImagesFromTempToIncidencias(request.usuario._id);
+    body.images = images; //the name is the same than in the model
     incidencias_model_1.Incidencia.create(body).then((incidenciaDB) => __awaiter(void 0, void 0, void 0, function* () {
         yield incidenciaDB.populate('usuario', '-password');
         response.json({
@@ -49,7 +51,7 @@ incidenciaRoutes.post('/', [authentication_1.verifyToken], (request, response) =
         response.json(err);
     });
 });
-incidenciaRoutes.post('/upload', [authentication_1.verifyToken], (request, response) => {
+incidenciaRoutes.post('/upload', [authentication_1.verifyToken], (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     if (!request.files) {
         return response.status(400).json({
             ok: false,
@@ -71,10 +73,10 @@ incidenciaRoutes.post('/upload', [authentication_1.verifyToken], (request, respo
         });
     }
     //llamando al mmetodo para crear el directorio con el usuario y la imagen
-    fileSystem.saveImgTemp(file, request.usuario._id);
+    yield fileSystem.saveTempImg(file, request.usuario._id);
     response.json({
         ok: true,
         file: file.mimetype
     });
-});
+}));
 exports.default = incidenciaRoutes;

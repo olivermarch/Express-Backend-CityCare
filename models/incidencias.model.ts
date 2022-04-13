@@ -8,10 +8,10 @@ const incidenciaSchema = new Schema({
     mensaje: {
         type: String
     },
-    img:[{
+    images:[{
         type: String
     }],
-    coordenadas : {
+    coordinates : {
         type: String
     },
     usuario: {

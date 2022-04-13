@@ -40,7 +40,8 @@ incidenciaRoutes.post('/', [verifyToken], (request: any, response: Response) => 
 
     const body = request.body;
     body.usuario = request.usuario._id;
-
+    const images = fileSystem.moveImagesFromTempToIncidencias(request.usuario._id);
+    body.images = images; //the name is the same than in the model
     
 
     Incidencia.create(body).then( async incidenciaDB => {
@@ -58,7 +59,7 @@ incidenciaRoutes.post('/', [verifyToken], (request: any, response: Response) => 
 
 });
 
-incidenciaRoutes.post('/upload', [ verifyToken], (request: any, response: Response) =>{
+incidenciaRoutes.post('/upload', [ verifyToken],async (request: any, response: Response) =>{
 
     if (!request.files) {
             return response.status(400).json({
@@ -85,7 +86,7 @@ incidenciaRoutes.post('/upload', [ verifyToken], (request: any, response: Respon
     }
 
     //llamando al mmetodo para crear el directorio con el usuario y la imagen
-    fileSystem.saveImgTemp(file, request.usuario._id);
+     await fileSystem.saveTempImg(file, request.usuario._id);
 
     response.json({
         ok: true,

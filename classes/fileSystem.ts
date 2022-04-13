@@ -7,20 +7,32 @@ export default class FileSystem {
 
     constructor(){};
 
-    saveImgTemp(file: FileUpload, userID: string){
+    saveTempImg(file: FileUpload, userID: string){
 
-        const path = this.createUserFolder(userID);
+        return new Promise<void>(( resolve, reject) =>{
 
-        const nameFile = this.generateUniqueName(file.name);
-        console.log(file.name); 
-        console.log(nameFile); 
+
+            // create folder
+            const path = this.createUserFolder(userID);
+            // naming the file
+            const nameFile = this.generateUniqueName(file.name);
+            console.log(file.name); 
+            console.log(nameFile); 
+            // movin the file from temp to the final folder
+            file.mv(`${path}/${nameFile}`, (err: any) => {
+                if (err){
+                    reject(err);
+                }else{
+                    resolve();
+                }
+            });
+        });
     }
 
     private generateUniqueName( originalNameFile: string){
 
         const nameArray = originalNameFile.split('.');
         const extension = nameArray[ nameArray.length - 1];
-        console.log(extension);
 
         const idUnique = uniqid();
         
@@ -40,7 +52,33 @@ export default class FileSystem {
             fs.mkdirSync(pathUser);
             fs.mkdirSync(pathUserTemp);
         }
-
         return pathUserTemp;
+    }
+
+    moveImagesFromTempToIncidencias( userID: string){
+
+        const pathTemp = path.resolve( __dirname, '../uploads', userID, 'temp');
+        const pathIncidencias = path.resolve( __dirname, '../uploads', userID, 'incidencias');
+
+        if (!fs.existsSync(pathTemp)) {
+            return [];
+        }
+        if (!fs.existsSync(pathIncidencias)) {
+            fs.mkdirSync(pathIncidencias);
+        }
+        
+        const tempImgs = this.getTempImg(userID);
+        
+        tempImgs.forEach(image => {
+            fs.renameSync( `${ pathTemp }/${ image }`, `${ pathIncidencias }/${ image }` )
+        });
+        return tempImgs;
+    }
+
+    private getTempImg( userID: string){
+
+        const pathTemp = path.resolve( __dirname, '../uploads', userID, 'temp');
+
+        return fs.readdirSync(pathTemp) || [];
     }
 }
