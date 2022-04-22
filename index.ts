@@ -20,6 +20,12 @@ server.app.use( bodyParser.json() );
 // Subidas de archivos
 server.app.use(fileUpload({useTempFiles: true}) );
 
+//CORS
+server.app.use(cors({ 
+    origin: true, 
+    credentials: true
+}));
+
 // Rutas
 server.app.use('/user', userRoutes );
 server.app.use('/incidencia', incidenciaRoutes);
@@ -39,10 +45,5 @@ server.start( () => {
     console.log(`Servidor levantado en puerto ${ server.port }`);
 });
 
-//CORS
 
-server.app.use(cors({ 
-    origin: true, 
-    credentials: true
-}));
 

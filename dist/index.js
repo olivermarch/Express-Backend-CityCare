@@ -17,6 +17,11 @@ server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 // Subidas de archivos
 server.app.use((0, express_fileupload_1.default)({ useTempFiles: true }));
+//CORS
+server.app.use((0, cors_1.default)({
+    origin: true,
+    credentials: true
+}));
 // Rutas
 server.app.use('/user', usuario_1.default);
 server.app.use('/incidencia', incidencia_1.default);
@@ -30,8 +35,3 @@ mongoose_1.default.connect(uri, (err) => {
 server.start(() => {
     console.log(`Servidor levantado en puerto ${server.port}`);
 });
-//CORS
-server.app.use((0, cors_1.default)({
-    origin: true,
-    credentials: true
-}));
