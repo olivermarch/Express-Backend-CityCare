@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
+const cors_1 = __importDefault(require("cors"));
 const server_1 = __importDefault(require("./classes/server"));
 const incidencia_1 = __importDefault(require("./routes/incidencia"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
@@ -27,5 +28,10 @@ mongoose_1.default.connect(uri, (err) => {
 });
 // Levantar express
 server.start(() => {
-    console.log(`Servidor corriendo en puertos ${server.port}`);
+    console.log(`Servidor levantado en puerto ${server.port}`);
 });
+//CORS
+server.app.use((0, cors_1.default)({
+    origin: true,
+    credentials: true
+}));

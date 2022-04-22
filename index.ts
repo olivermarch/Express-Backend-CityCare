@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
 import fileUpload from 'express-fileupload';
+import cors from 'cors';
 import Server from './classes/server';
 
 import incidenciaRoutes from './routes/incidencia';
@@ -35,5 +36,13 @@ mongoose.connect(uri,
 
 // Levantar express
 server.start( () => {
-    console.log(`Servidor corriendo en puertos ${ server.port }`);
+    console.log(`Servidor levantado en puerto ${ server.port }`);
 });
+
+//CORS
+
+server.app.use(cors({ 
+    origin: true, 
+    credentials: true
+}));
+
