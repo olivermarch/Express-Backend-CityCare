@@ -23,7 +23,7 @@ incidenciaRoutes.get('/', async (request: any, response: Response) => {
 
 
     const incidencias = await Incidencia.find()
-                                        //.sort({_id: -1})
+                                        .sort({_id: -1})
                                         .limit(10)
                                         .skip(skip)
                                         .populate('usuario', '-password')

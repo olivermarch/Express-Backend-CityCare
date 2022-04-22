@@ -25,7 +25,7 @@ incidenciaRoutes.get('/', (request, response) => __awaiter(void 0, void 0, void 
     let skip = page - 1;
     skip = skip * 10;
     const incidencias = yield incidencias_model_1.Incidencia.find()
-        //.sort({_id: -1})
+        .sort({ _id: -1 })
         .limit(10)
         .skip(skip)
         .populate('usuario', '-password')

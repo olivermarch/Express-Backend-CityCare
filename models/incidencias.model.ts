@@ -14,6 +14,13 @@ const incidenciaSchema = new Schema({
     coordinates : {
         type: String
     },
+    state : {
+        type: String,
+        default: 'En revisión'
+    },
+    title : {
+        type: String
+    },
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',

@@ -15,6 +15,13 @@ const incidenciaSchema = new mongoose_1.Schema({
     coordinates: {
         type: String
     },
+    state: {
+        type: String,
+        default: 'En revisión'
+    },
+    title: {
+        type: String
+    },
     usuario: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Usuario',
