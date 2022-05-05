@@ -26,8 +26,9 @@ userRoutes.post('/login', (request, response) => {
             const token = token_1.default.getJwToken({
                 _id: userDB._id,
                 nombre: userDB.nombre,
+                apellidos: userDB.apellidos,
                 email: userDB.email,
-                avatar: userDB.avatar
+                municipio: userDB.municipio
             });
             response.json({
                 ok: true,
@@ -46,9 +47,10 @@ userRoutes.post('/login', (request, response) => {
 userRoutes.post('/create', (request, response) => {
     const user = {
         nombre: request.body.nombre,
+        apellidos: request.body.apellidos,
         email: request.body.email,
         password: bcrypt_1.default.hashSync(request.body.password, 10),
-        avatar: request.body.avatar
+        municipio: request.body.municipio
     };
     // Aqui mandamos el usuario creado a la bbdd, el metodo create manda el objeto usuario
     //Este metodo devuele una promesa
@@ -56,8 +58,9 @@ userRoutes.post('/create', (request, response) => {
         const token = token_1.default.getJwToken({
             _id: userDB._id,
             nombre: userDB.nombre,
+            apellidos: userDB.apellidos,
             email: userDB.email,
-            avatar: userDB.avatar
+            municipio: userDB.municipio
         });
         response.json({
             ok: true,
@@ -74,8 +77,9 @@ userRoutes.post('/create', (request, response) => {
 userRoutes.post('/update', authentication_1.verifyToken, (request, response) => {
     const user = {
         nombre: request.body.nombre || request.usuario.nombre,
+        apellidos: request.body.apellidos || request.usuario.apellidos,
         email: request.body.email || request.usuario.email,
-        avatar: request.body.avatar || request.usuario.avatar
+        municipio: request.body.municipio || request.usuario.municipio
     };
     usuario_model_1.Usuario.findByIdAndUpdate(request.usuario._id, user, { new: true }, (err, userDB) => {
         if (err)
@@ -89,8 +93,9 @@ userRoutes.post('/update', authentication_1.verifyToken, (request, response) => 
         const token = token_1.default.getJwToken({
             _id: userDB._id,
             nombre: userDB.nombre,
+            apellidos: userDB.apellidos,
             email: userDB.email,
-            avatar: userDB.avatar
+            municipio: userDB.municipio
         });
         response.json({
             ok: true,

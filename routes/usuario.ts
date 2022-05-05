@@ -28,8 +28,9 @@ userRoutes.post('/login', (request: Request, response: Response) => {
             const token = Token.getJwToken({
                 _id: userDB._id,
                 nombre: userDB.nombre,
+                apellidos: userDB.apellidos,
                 email: userDB.email,
-                avatar: userDB.avatar
+                municipio: userDB.municipio
             })
 
             response.json({
@@ -55,9 +56,10 @@ userRoutes.post('/create', ( request: Request, response: Response ) => {
 
     const user = {
         nombre   : request.body.nombre,
+        apellidos: request.body.apellidos,
         email    : request.body.email,
         password : bcrypt.hashSync(request.body.password, 10),
-        avatar   : request.body.avatar
+        municipio: request.body.municipio
     };
 
     // Aqui mandamos el usuario creado a la bbdd, el metodo create manda el objeto usuario
@@ -68,8 +70,9 @@ userRoutes.post('/create', ( request: Request, response: Response ) => {
         const token = Token.getJwToken({
             _id: userDB._id,
             nombre: userDB.nombre,
+            apellidos: userDB.apellidos,
             email: userDB.email,
-            avatar: userDB.avatar
+            municipio: userDB.municipio
         })
 
         response.json({
@@ -90,8 +93,9 @@ userRoutes.post('/update', verifyToken, (request: any, response: Response) => {
 
     const user = {
         nombre: request.body.nombre || request.usuario.nombre,
+        apellidos: request.body.apellidos || request.usuario.apellidos,
         email: request.body.email || request.usuario.email,
-        avatar: request.body.avatar || request.usuario.avatar
+        municipio: request.body.municipio || request.usuario.municipio
     }
 
     Usuario.findByIdAndUpdate(request.usuario._id, user, { new: true}, (err, userDB) => {
@@ -109,8 +113,9 @@ userRoutes.post('/update', verifyToken, (request: any, response: Response) => {
         const token = Token.getJwToken({
             _id: userDB._id,
             nombre: userDB.nombre,
+            apellidos: userDB.apellidos,
             email: userDB.email,
-            avatar: userDB.avatar
+            municipio: userDB.municipio
         })
 
         response.json({

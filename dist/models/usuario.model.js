@@ -11,9 +11,9 @@ const usuarioSchema = new mongoose_1.Schema({
         type: String,
         required: [true, 'The user name is required']
     },
-    avatar: {
+    apellidos: {
         type: String,
-        default: 'avatar-1.png'
+        required: [true, 'The user surname is required']
     },
     email: {
         type: String,
@@ -23,6 +23,10 @@ const usuarioSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: [true, 'The password is required']
+    },
+    municipio: {
+        type: String,
+        required: [true, 'The municipio is required']
     }
 });
 usuarioSchema.method('toCheckPassword', function (password = '') {
