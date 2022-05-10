@@ -19,6 +19,13 @@ const incidenciaSchema = new mongoose_1.Schema({
         type: String,
         default: 'En revisión'
     },
+    municipio: {
+        type: String,
+    },
+    support: {
+        type: Number,
+        default: 0
+    },
     title: {
         type: String
     },

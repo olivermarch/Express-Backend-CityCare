@@ -43,7 +43,7 @@ incidenciaRoutes.post('/', [verifyToken], (request: any, response: Response) => 
     const body = request.body;
     body.usuario = request.usuario._id;
     const images = fileSystem.moveImagesFromTempToIncidencias(request.usuario._id);
-    body.images = images; //the name is the same than in the model
+    body.images = images; //the name is the same as in the model
     
 
     Incidencia.create(body).then( async incidenciaDB => {

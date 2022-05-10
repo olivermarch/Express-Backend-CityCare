@@ -41,7 +41,7 @@ incidenciaRoutes.post('/', [authentication_1.verifyToken], (request, response) =
     const body = request.body;
     body.usuario = request.usuario._id;
     const images = fileSystem.moveImagesFromTempToIncidencias(request.usuario._id);
-    body.images = images; //the name is the same than in the model
+    body.images = images; //the name is the same as in the model
     incidencias_model_1.Incidencia.create(body).then((incidenciaDB) => __awaiter(void 0, void 0, void 0, function* () {
         yield incidenciaDB.populate('usuario', '-password');
         response.json({

@@ -18,6 +18,13 @@ const incidenciaSchema = new Schema({
         type: String,
         default: 'En revisión'
     },
+    municipio : {
+        type: String,
+    },
+    support : {
+        type: Number,
+        default: 0
+    },
     title : {
         type: String
     },
@@ -40,6 +47,8 @@ interface IIncidencia extends Document {
     img: string [];
     coordenadas: string;
     usuario: string;
+    munucipio: string;
+    support: number;
 
 }
 
