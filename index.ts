@@ -42,7 +42,7 @@ mongoose.connect(uri,
 
 // Levantar express
 server.start( () => {
-    console.log(`Servidor levantado en puerto ${ server.port }`);
+    console.log(`Servidor levantado y funcionando en puerto ${ server.port }`);
 });
 
 
