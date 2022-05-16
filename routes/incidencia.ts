@@ -36,6 +36,29 @@ incidenciaRoutes.get('/', async (request: any, response: Response) => {
     })
 });
 
+// Para obtener las incidencias por usuario
+incidenciaRoutes.get('/usuario', async (request: any, response: Response) => {
+
+    const { user } = request.query;
+
+    var mongoose = require('mongoose');
+    var userId = mongoose.Types.ObjectId(user);
+
+    const incidencias = await Incidencia.find({usuario: userId})
+                                        .sort({_id: -1})
+                                        .populate('usuario', '-password')
+                                        .exec();
+
+    response.json({
+        //usuario,
+        ok: true,
+        incidencias
+    })
+
+
+});
+
+
 
 //Con esto creamos las incidencias
 incidenciaRoutes.post('/', [verifyToken], (request: any, response: Response) => {

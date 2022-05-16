@@ -24,6 +24,10 @@ const usuarioSchema = new Schema({
     municipio: {
         type: String,
         required: [ true, 'The municipio is required']
+    },
+    role: {
+        type: String,
+        default: 'user'
     }
 
 });
@@ -45,6 +49,7 @@ interface IUsuario extends Document {
     email: string;
     password: string;
     municipio: string;
+    role: string;
 
 
     toCheckPassword(password: string): boolean;

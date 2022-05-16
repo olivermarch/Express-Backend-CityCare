@@ -33,6 +33,10 @@ const incidenciaSchema = new Schema({
         ref: 'Usuario',
         required: [true, 'El usuario tiene que existir']
     }
+    // usuario: {
+    //     type: String,
+    //     required: [true, 'El usuario tiene que existir']
+    // }
 });
 
 incidenciaSchema.pre<IIncidencia>('save', function( next ){

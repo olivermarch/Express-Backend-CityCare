@@ -27,6 +27,10 @@ const usuarioSchema = new mongoose_1.Schema({
     municipio: {
         type: String,
         required: [true, 'The municipio is required']
+    },
+    role: {
+        type: String,
+        default: 'user'
     }
 });
 usuarioSchema.method('toCheckPassword', function (password = '') {

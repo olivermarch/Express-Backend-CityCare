@@ -34,6 +34,10 @@ const incidenciaSchema = new mongoose_1.Schema({
         ref: 'Usuario',
         required: [true, 'El usuario tiene que existir']
     }
+    // usuario: {
+    //     type: String,
+    //     required: [true, 'El usuario tiene que existir']
+    // }
 });
 incidenciaSchema.pre('save', function (next) {
     this.created = new Date();
